@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Basket from "./components/Basket";
 import ProductList from "./components/ProductList";
 
+ 
 
 const App = () => {
   const [data, setData] = useState({}); 
-  const [cartItems, setCartItems] = useState({});  
-  //const [cartItems, setCartItems] = useState(0); 
+  const [cartItems, setCartItems] = useState([]);
+  
   
   const products = Object.values(data);
 

@@ -1,12 +1,34 @@
 import React, { useEffect, useState } from 'react';
-
+import {setCartDisplay} from '../App.js'
 
 const Basket = ({cartItems}) => {	
+const [cartDisplay,setCartDisplay] = useState('False'); 
 
-	return(
-		<div className = 'alent alent-info'>
+		if (cartDisplay == "True") {
+			return(
+			<div>	
+			<div className = 'alert alert-info'>
+			<span> Shopping Cart </span>
+			<button className = "btn btn-default" onClick = {()=>setCartDisplay('False')}>Close</button>
+			</div>
+
+			<div className = 'alert alert-info'>
 			{cartItems.length === 0? " Your shopping cart is empty" : <div> You have {cartItems.length} products in your shopping cart. </div>}
-		</div>)
+			</div>
+			</div>
+
+			)}
+		else {
+			return(
+			<div className = 'alert alert-info'>
+			<span> Shopping Cart </span>
+			<button className = "btn btn-default"  onClick = {()=>setCartDisplay('True')}>Open</button>
+			</div>
+			)}
+
+		
+
+
 }
 
 export default Basket;

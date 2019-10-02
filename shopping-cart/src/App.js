@@ -8,7 +8,35 @@ const App = () => {
   const [data, setData] = useState({}); 
   const [cartItems, setCartItems] = useState([]);
   
+  ////
+  const handleAddToCart = function (e,product){
+    let cartProducts = [];
+      let productAlreadyInCart = false;
+      cartItems.forEach(item =>{
+        if(item.product.sku==product.sku) {
+          productAlreadyInCart = true;
+          item.count++;
+        }
+        cartProducts.push(item);
+      });
+      if (!productAlreadyInCart){
+        cartItems.push({product,count:1});
+      }
+      setCartItems(cartProducts);
+  };
+
+  const handleRemoveFromCart = function (e,product){
+    let cartProducts = [];
+      cartItems.forEach(item =>{
+        if(item.product.sku !== product.sku) {
+          cartProducts.push(item);
+        }
+      });
+      setCartItems(cartProducts);
+  };
   
+
+
   const products = Object.values(data);
 
   useEffect(() => {
@@ -26,10 +54,10 @@ const App = () => {
     <hr/>
     <div className = "row">
       <div className = "col-md-8">
-        <ProductList products = {products} />
+        <ProductList products = {products} handleAddToCartFunc = {handleAddToCart}/>
       </div>
       <div className = "col-md-4">
-        <Basket cartItems = {cartItems}/>
+        <Basket cartItems = {cartItems} handleRemoveFromCart = {handleRemoveFromCart}/>
       </div>
     </div>
     </div>

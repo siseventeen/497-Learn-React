@@ -13,15 +13,16 @@ const App = () => {
     let cartProducts = [];
       let productAlreadyInCart = false;
       cartItems.forEach(item =>{
-        if(item.product.sku==product.sku) {
+        if(item.product.sku === product.sku) {
           productAlreadyInCart = true;
           item.count++;
         }
         cartProducts.push(item);
       });
       if (!productAlreadyInCart){
-        cartItems.push({product,count:1});
+        cartProducts.push({product,count:1});
       }
+      // localStorage.setItem("cartItems",JSON.stringify(cartItems));
       setCartItems(cartProducts);
   };
 
@@ -32,10 +33,9 @@ const App = () => {
           cartProducts.push(item);
         }
       });
+      // localStorage.setItem("cartItems",JSON.stringify(cartItems));
       setCartItems(cartProducts);
   };
-  
-
 
   const products = Object.values(data);
 
@@ -54,10 +54,10 @@ const App = () => {
     <hr/>
     <div className = "row">
       <div className = "col-md-8">
-        <ProductList products = {products} handleAddToCartFunc = {handleAddToCart}/>
+        <ProductList products = {products} handleAddToCartFunc =  {handleAddToCart}/>
       </div>
       <div className = "col-md-4">
-        <Basket cartItems = {cartItems} handleRemoveFromCart = {handleRemoveFromCart}/>
+        <Basket cartItems = {cartItems} handleRemoveFromCartFunc = {handleRemoveFromCart}/>
       </div>
     </div>
     </div>

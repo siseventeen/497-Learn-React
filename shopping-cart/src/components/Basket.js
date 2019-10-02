@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import {setCartDisplay} from '../App.js'
 
-const Basket = ({cartItems}) => {	
+const Basket = ({cartItems, handleRemoveFromCartFunc}) => {	
 const [cartDisplay,setCartDisplay] = useState(false); 
 
 		if (cartDisplay) {
 			return(
 			<div>	
 			<div className = 'alert alert-info'>
-			<span> Shopping Cart </span>
+			{cartItems.length === 0? " Your shopping cart is empty" : <span> You have {cartItems.length} products. </span>}
 			<button className = "btn btn-default" onClick = {()=>setCartDisplay(false)}>Close</button>
 			</div>
 
 			<div className = 'alert alert-info'>
-			{cartItems.length === 0? " Your shopping cart is empty" : <div> You have {cartItems.length} products in your shopping cart. </div>}
+			
 			{cartItems.length > 0 &&
 				<div>
 					<ul>
@@ -37,7 +36,7 @@ const [cartDisplay,setCartDisplay] = useState(false);
 		else {
 			return(
 			<div className = 'alert alert-info'>
-			<span> Shopping Cart </span>
+			{cartItems.length === 0? " Your shopping cart is empty" : <span> You have {cartItems.length} products. </span>}
 			<button className = "btn btn-default"  onClick = {()=>setCartDisplay(true)}>Open</button>
 			</div>
 			)}

@@ -8,6 +8,11 @@ const ProductList = ({products, handleAddToCartFunc}) => (
   
 const Product = ({product, handleFunc}) => {
   const [productSize, setProductSize] = useState('S');
+
+  const handleSizeChange = select_id => {
+    setProductSize(document.getElementById(select_id).value);
+  };
+
   return(
     <div className = "col-md-4">
     <div className = "thumbnail text-center">
@@ -18,16 +23,16 @@ const Product = ({product, handleFunc}) => {
         </h5>
         <div>
         <div className="form-group">
-          <select className="form-control">
-          <option key='S' onClick = {()=> setProductSize('S')}>S</option>
-          <option key='M' onClick = {()=> setProductSize('M')}>M</option>
-          <option key='L' onClick = {()=> setProductSize('L')}>L</option>
-          <option key='XL' onClick = {()=> setProductSize('XL')}>XL</option>
+          <select className="form-control" id={`${product.sku}-size-select`} onChange={()=>handleSizeChange(`${product.sku}-size-select`)}>
+          <option value='S'>S</option>
+          <option value='M'>M</option>
+          <option value='L'>L</option>
+          <option value='XL'>XL</option>
           </select>
       </div>
           <b>{`$${product.price} `}</b>
           <button className = "btn btn-primary"
-          onClick = {(e) => handleFunc(e,product)}>Add to Card</button>
+          onClick = {(e) => handleFunc(e,product,productSize)}>Add to Card</button>
         </div>
       {/* </a> */}
     </div> 

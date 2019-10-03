@@ -6,35 +6,40 @@ import ProductList from "./components/ProductList";
 
 const App = () => {
   const [data, setData] = useState({}); 
+  /* cartItem: {product:..., size:..., count:...} */
   const [cartItems, setCartItems] = useState([]);
+
   
-  ////
-  const handleAddToCart = function (e,product){
-    let cartProducts = [];
-      let productAlreadyInCart = false;
+  const handleAddToCart = function (e,product,productSize){
+    let tempCartItems = [];
+      let itemAlreadyInCart = false;
       cartItems.forEach(item =>{
-        if(item.product.sku === product.sku) {
-          productAlreadyInCart = true;
+
+        // how to get the product.size 
+        if((item.product.sku === product.sku) && (item.size === productSize)){
+          itemAlreadyInCart = true; 
           item.count++;
         }
-        cartProducts.push(item);
+        tempCartItems.push(item);
       });
-      if (!productAlreadyInCart){
-        cartProducts.push({product,count:1});
+      if (!itemAlreadyInCart){
+        tempCartItems.push({product,count:1,size:productSize});
       }
       // localStorage.setItem("cartItems",JSON.stringify(cartItems));
-      setCartItems(cartProducts);
+      setCartItems(tempCartItems);
   };
 
-  const handleRemoveFromCart = function (e,product){
-    let cartProducts = [];
+
+
+  const handleRemoveFromCart = function (e,product,productSize){
+    let tempCartItems = [];
       cartItems.forEach(item =>{
-        if(item.product.sku !== product.sku) {
-          cartProducts.push(item);
+        if(item.product.sku !== product.sku || item.size != productSize) {
+          tempCartItems.push(item);
         }
       });
       // localStorage.setItem("cartItems",JSON.stringify(cartItems));
-      setCartItems(cartProducts);
+      setCartItems(tempCartItems);
   };
 
   const products = Object.values(data);

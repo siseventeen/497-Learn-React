@@ -66,16 +66,13 @@ const App = () => {
   const products = Object.values(data);
   //const inventories = Object.values(inventory);
 
-  useEffect(() => {
+ useEffect(() => {
     const fetchProducts = async () => {
       const response = await fetch('./data/products.json');
       const json = await response.json();
       setData(json);
     };
     fetchProducts();
-  }, []);
-
-  useEffect(() => {
     const fetchInventory = async () => {
       const response = await fetch('./data/inventory.json');
       const json = await response.json();

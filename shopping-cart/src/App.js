@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Basket from "./components/Basket";
 import ProductList from "./components/ProductList";
 
- 
 
 const App = () => {
   const [data, setData] = useState({}); 
@@ -87,7 +86,7 @@ const App = () => {
     <hr/>
     <div className = "row">
       <div className = "col-md-8">
-        <ProductList products = {products} inventory={inventory} handleAddToCartFunc =  {handleAddToCart}/>
+        <ProductList products = {products} inventories={inventory} handleAddToCartFunc =  {handleAddToCart}/>
       </div>
       <div className = "col-md-4">
         <Basket cartDisplay={cartOpen} handleCartDisplayFunc={handleCartDisplay} cartItems = {cartItems} handleRemoveFromCartFunc = {handleRemoveFromCart}/>

@@ -1,7 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Basket from "./components/Basket";
 import ProductList from "./components/ProductList";
+import firebase from 'firebase/app';
+import 'firebase/database';
 
+const firebaseConfig = {
+  apiKey: "AIzaSyCq3Jeya99El9A3PDuqEKap8yvkzbFLTfw",
+  authDomain: "learnreact-43175.firebaseapp.com",
+  databaseURL: "https://learnreact-43175.firebaseio.com",
+  projectId: "learnreact-43175",
+  storageBucket: "learnreact-43175.appspot.com",
+  messagingSenderId: "478211285232",
+  appId: "1:478211285232:web:30e5bc3cbf7879df726235"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database().ref();
 
 const App = () => {
   const [data, setData] = useState({}); 
@@ -9,6 +23,25 @@ const App = () => {
   const [inventory, setInventory] = useState({}); 
   const [cartItems, setCartItems] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await fetch('./data/products.json');
+      const json = await response.json();
+      setData(json);
+    };
+    fetchProducts();  
+  }, []);
+
+  useEffect(()=>{
+    const handleData = snap => {
+      if (snap.val()) setInventory(snap.val());
+    }
+    db.on('value', handleData, error => alert(error));
+    return () => { db.off('value', handleData); };
+  }, []);
+
+  
 
   const handleCartDisplay = function (cart_open) {
     setCartOpen(cart_open);
@@ -64,21 +97,6 @@ const App = () => {
 
   const products = Object.values(data);
   //const inventories = Object.values(inventory);
-
- useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await fetch('./data/products.json');
-      const json = await response.json();
-      setData(json);
-    };
-    fetchProducts();
-    const fetchInventory = async () => {
-      const response = await fetch('./data/inventory.json');
-      const json = await response.json();
-      setInventory(json);
-    };
-    fetchInventory();
-  }, []);
 
   return(
     <div className = "container">

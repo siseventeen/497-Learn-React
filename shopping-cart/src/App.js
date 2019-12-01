@@ -1,8 +1,12 @@
+//import 'rbx/index.css';
+import { Button, Container, Message, Title } from 'rbx';
 import React, { useEffect, useState } from 'react';
 import Basket from "./components/Basket";
 import ProductList from "./components/ProductList";
 import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/auth';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCq3Jeya99El9A3PDuqEKap8yvkzbFLTfw",
@@ -17,8 +21,19 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database().ref();
 
+const uiConfig = {
+  signInFlow: 'popup',
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID
+  ],
+  callbacks: {
+    signInSuccessWithAuthResult: () => false
+  }
+};
+
 const App = () => {
   const [data, setData] = useState({}); 
+  const [user, setUser] = useState(null);
   /* cartItem: {product:..., size:..., count:...} */
   const [inventory, setInventory] = useState({}); 
   const [cartItems, setCartItems] = useState([]);
@@ -31,6 +46,7 @@ const App = () => {
       setData(json);
     };
     fetchProducts();  
+
   }, []);
 
   useEffect(()=>{
@@ -39,6 +55,10 @@ const App = () => {
     }
     db.on('value', handleData, error => alert(error));
     return () => { db.off('value', handleData); };
+  }, []);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(setUser);
   }, []);
 
   
@@ -98,8 +118,27 @@ const App = () => {
   const products = Object.values(data);
   //const inventories = Object.values(inventory);
 
+  const Welcome = ({ user }) => (
+  <Message color="info">
+    <Message.Header>
+      Welcome, {user.displayName}
+      <Button primary onClick={() => firebase.auth().signOut()}>
+        Log out
+      </Button>
+    </Message.Header>
+  </Message>
+);
+
+  const SignIn = () => (
+  <StyledFirebaseAuth
+    uiConfig={uiConfig}
+    firebaseAuth={firebase.auth()}
+  />
+);
+
   return(
     <div className = "container">
+    { user ? <Welcome user={ user } /> : <SignIn /> }
     <h1>T-shirt Shopping Cart</h1>
     <hr/>
     <div className = "row">

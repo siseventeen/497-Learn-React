@@ -4,9 +4,12 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.7.0",
-    "firebase": "^7.5.0",
+    "firebase": "^6.6.2",
+    "firestore-export-import": "^0.3.0",
+    "rbx": "^2.2.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
+    "react-firebaseui": "^4.0.0",
     "react-scripts": "3.1.2"
   },
   "scripts": {

@@ -37,7 +37,7 @@ const Product = ({ product, inventory, handleFunc }) => {
           </div>
           <b>{`$${product.price} `}</b>
           <button className="btn btn-primary"
-            onClick={(e) => handleFunc(e, product, document.getElementById(`${product.sku}-size-select`).value)}>Add to Card</button>
+            onClick={(e) => handleFunc(e, product.sku, document.getElementById(`${product.sku}-size-select`).value)}>Add to Cart</button>
         </div>);
     }
   };

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.7.0",
-    "firebase": "^6.6.2",
+    "firebase": "^10.9.0",
     "firestore-export-import": "^0.3.0",
     "rbx": "^2.2.0",
     "react": "^16.10.1",
